@@ -1,0 +1,34 @@
+--Create a bakery database
+
+CREATE TABLE bakery(id INTEGER PRIMARY KEY, item TEXT, quantity INTEGER, price INTEGER, box INTEGER);
+
+INSERT INTO bakery VALUES(1, "Croissant", 5, 3, 3);
+INSERT INTO bakery VALUES(2, "Tiramisu", 3, 7, 1);
+INSERT INTO bakery VALUES(3, "Blueberry Muffin", 10, 2, 4);
+INSERT INTO bakery VALUES(4, "Beignets", 12, 4, 5);
+INSERT INTO bakery VALUES(5, "Donut", 20, 2, 6);
+INSERT INTO bakery VALUES(6, "Baguette", 3, 5, 7);
+INSERT INTO bakery VALUES(7, "Boston Creme Eclair", 12, 8, 2);
+INSERT INTO bakery VALUES(8, "Tiramisu Eclair", 12, 8, 2);
+INSERT INTO bakery VALUES(9, "Cherry Blossom Eclair", 12, 8, 2);
+INSERT INTO bakery VALUES(10, "Plain Bagel", 5, 2, 8);
+INSERT INTO bakery VALUES(11, "Everything Bagel", 5, 2, 8);
+INSERT INTO bakery VALUES(12, "Black Forest Cake", 1, 30, 9);
+INSERT INTO bakery VALUES(13, "Fresh Fruit Cake", 1, 30, 9);
+INSERT INTO bakery VALUES(14, "Vanilla Cupcake", 12, 4, 10);
+INSERT INTO bakery VALUES(15, "Birthday Cake Cupcake", 12, 4, 10);
+
+--display the database ordered by price
+SELECT * FROM bakery
+ORDER BY price;
+
+--what is the total amount of items in each box?
+SELECT box, SUM(quantity) 
+FROM bakery
+GROUP BY box;
+
+--what are the 5 items with lowest inventory?
+SELECT name, quantity, price 
+FROM bakery
+ORDER BY quantity
+LIMIT 5;
