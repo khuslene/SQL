@@ -28,7 +28,7 @@ FROM bakery
 GROUP BY box;
 
 --what are the 5 items with lowest inventory?
-SELECT name, quantity, price 
+SELECT item, quantity, price 
 FROM bakery
 ORDER BY quantity
 LIMIT 5;
