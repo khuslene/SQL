@@ -1,4 +1,4 @@
---create a database about singers
+--Create a database about singers
 
 CREATE TABLE singers (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
