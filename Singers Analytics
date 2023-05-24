@@ -1,4 +1,4 @@
---Create a database about singers
+#This SQL code contains the creation of a database about singers. I'm querying this database to answer questions about the data.
 
 CREATE TABLE singers (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -79,14 +79,14 @@ INSERT INTO song (person_id, song, billboard_placement, genre) VALUES (8, "God's
 
 INSERT INTO song (person_id, song, billboard_placement, genre) VALUES (8, "The Motto", 14, "rap");
 
---display singers who were born in USA
+#1. Which singers were born in USA?
 SELECT singers.name, country.country 
 FROM singers
 JOIN country
 on singers.id = country.person_id
 WHERE country.country = "USA";
 
---display singers with songs that were in the top 10 billboard hot 100
+#2. Which songs were in the top 10 billboard hot 100?
 SELECT singers.name, song.song, song.billboard_placement
 FROM singers
 JOIN song 
@@ -94,14 +94,14 @@ on singers.id = song.person_id
 WHERE song.billboard_placement <=10
 ORDER BY song.billboard_placement;
 
---display singers and songs in the rap genre
+#3. Which singers and songs are in the rap genre?
 SELECT singers.name, song.song, song.genre
 FROM singers
 JOIN song
 on singers.id = song.person_id
 WHERE song.genre = "rap";
 
---display singers and their average billboard hot 100 placement
+#4. List singers and their average billboard hot 100 placement.
 SELECT singers.name, AVG(song.billboard_placement) as average_billboard_placement
 FROM singers
 JOIN song
