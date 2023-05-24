@@ -1,0 +1,109 @@
+--create a database about singers
+
+CREATE TABLE singers (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    age INTEGER);
+    
+INSERT INTO singers (name, age) VALUES ("Halsey", 28);
+
+INSERT INTO singers (name, age) VALUES ("Agust D", 30);
+
+INSERT INTO singers (name, age) VALUES ("Becky G", 26);
+
+INSERT INTO singers (name, age) VALUES ("J Hope", 29);
+
+INSERT INTO singers (name, age) VALUES ("Taylor Swift", 33);
+
+INSERT INTO singers (name, age) VALUES ("Selena Gomez", 30);
+
+INSERT INTO singers (name, age) VALUES ("Justin Bieber", 29);
+
+INSERT INTO singers (name, age) VALUES ("Drake", 36);
+
+CREATE TABLE country (
+    person_id INTEGER,
+    country TEXT);
+
+INSERT INTO country (person_id, country) VALUES (1, "USA");
+
+INSERT INTO country (person_id, country) VALUES (2, "Korea");
+
+INSERT INTO country (person_id, country) VALUES (3, "USA");
+
+INSERT INTO country (person_id, country) VALUES (4, "Korea");
+
+INSERT INTO country (person_id, country) VALUES (5, "USA");
+
+INSERT INTO country (person_id, country) VALUES (6, "USA");
+
+INSERT INTO country (person_id, country) VALUES (7, "Canada");
+
+INSERT INTO country (person_id, country) VALUES (8, "Canada");
+
+CREATE TABLE song (
+    person_id INTEGER,
+    song TEXT,
+    billboard_placement INTEGER,
+    genre TEXT);
+
+INSERT INTO song (person_id, song, billboard_placement, genre) VALUES (1, "Without Me", 1, "pop");
+
+INSERT INTO song (person_id, song, billboard_placement, genre) VALUES (1, "Now or Never", 17, "pop");
+
+INSERT INTO song (person_id, song, billboard_placement, genre) VALUES (2, "Daechwita", 76, "rap");
+
+INSERT INTO song (person_id, song, billboard_placement, genre) VALUES (2, "Haegeum", 58, "rap");
+
+INSERT INTO song (person_id, song, billboard_placement, genre) VALUES (3, "Shower", 16, "pop");
+
+INSERT INTO song (person_id, song, billboard_placement, genre) VALUES (3, "Mayores", 74, "latin urbano");
+
+INSERT INTO song (person_id, song, billboard_placement, genre) VALUES (4, "On The Street", 60, "rap");
+
+INSERT INTO song (person_id, song, billboard_placement, genre) VALUES (4, "Chicken Noodle Soup", 81, "rap");
+
+INSERT INTO song (person_id, song, billboard_placement, genre) VALUES (5, "Shake It Off", 1, "pop");
+
+INSERT INTO song (person_id, song, billboard_placement, genre) VALUES (5, "Teardrops On My Guitar", 13, "pop");
+
+INSERT INTO song (person_id, song, billboard_placement, genre) VALUES (6, "Calm Down", 5, "afrobeats");
+
+INSERT INTO song (person_id, song, billboard_placement, genre) VALUES (6, "Love You Like A Love Song", 22, "pop");
+
+INSERT INTO song (person_id, song, billboard_placement, genre) VALUES (7, "Sorry", 1, "pop");
+
+INSERT INTO song (person_id, song, billboard_placement, genre) VALUES (7, "Ghost", 5, "pop");
+
+INSERT INTO song (person_id, song, billboard_placement, genre) VALUES (8, "God's Plan", 1, "pop");
+
+INSERT INTO song (person_id, song, billboard_placement, genre) VALUES (8, "The Motto", 14, "rap");
+
+--display singers who were born in USA
+SELECT singers.name, country.country 
+FROM singers
+JOIN country
+on singers.id = country.person_id
+WHERE country.country = "USA";
+
+--display singers with songs that were in the top 10 billboard hot 100
+SELECT singers.name, song.song, song.billboard_placement
+FROM singers
+JOIN song 
+on singers.id = song.person_id
+WHERE song.billboard_placement <=10
+ORDER BY song.billboard_placement;
+
+--display singers and songs in the rap genre
+SELECT singers.name, song.song, song.genre
+FROM singers
+JOIN song
+on singers.id = song.person_id
+WHERE song.genre = "rap";
+
+--display singers and their average billboard hot 100 placement
+SELECT singers.name, AVG(song.billboard_placement) as average_billboard_placement
+FROM singers
+JOIN song
+on singers.id = song.person_id
+GROUP BY singers.id;
