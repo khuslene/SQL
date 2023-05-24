@@ -1,4 +1,4 @@
---Create a Pokemon database
+#This SQL code contains a Pokemon database which is then queried to answer questions about the data
 CREATE TABLE pokemon(
   Number     INTEGER,
   Name       TEXT PRIMARY KEY,
@@ -815,32 +815,33 @@ INSERT INTO pokemon(Number,Name,Type_1,Type_2,Total,HP,Attack,Defense,Sp_Atk,Sp_
 INSERT INTO pokemon(Number,Name,Type_1,Type_2,Total,HP,Attack,Defense,Sp_Atk,Sp_Def,Speed,Generation,Legendary) VALUES (720,'HoopaHoopa Unbound','Psychic','Dark',680,80,160,60,170,130,80,6,'True');
 INSERT INTO pokemon(Number,Name,Type_1,Type_2,Total,HP,Attack,Defense,Sp_Atk,Sp_Def,Speed,Generation,Legendary) VALUES (721,'Volcanion','Fire','Water',600,80,110,120,130,90,70,6,'True');
 
---display number of pokemon in each generation
+#1. How many pokemon are in each generation?
 SELECT Generation, Count(DISTINCT number) as "Counts"
 FROM pokemon
 GROUP BY Generation;
 
---display top 10 unique pokemon with highest total stat
+#2. List the top 10 unique pokemon with highest total stat.
 SELECT Number, Name, Total
 FROM pokemon
 GROUP BY Number
 ORDER BY Total desc
 LIMIT 10;
 
---display and order unique pokemon with Attack stat over 150 from highest to lowest
+#3. List and order unique pokemon with Attack stat over 150 from highest to lowest.
 SELECT Number, Name, Attack
 FROM pokemon
 GROUP BY Number
 HAVING Attack > 150
 ORDER BY Attack desc;
 
---display number of legendary pokemon in each generation
+#4. How many legendary pokemon are in each generation?
 SELECT Generation, Count(Legendary) as "Counts"
 FROM pokemon
 WHERE Legendary = "True"
 GROUP BY Generation;
 
---display top 20 pokemon with highest total stats and then label as Strong or Weak based off of attack and sp.atk stats
+#5. List the top 20 pokemon with highest total stats along with labeling them as Strong or Weak based off of attack and sp.atk stats (Strong = Attack and Sp.Atk >150, Weak = Attack and Sp.Atk <150).
+SELECT name
     CASE 
         WHEN Attack >150 AND Sp_Atk > 150 THEN "Strong"
         ELSE "Weak"
