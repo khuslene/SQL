@@ -1,4 +1,4 @@
---Create a bakery database
+--This SQL code contains the creation of a bakery database which is queried to answer questions about the data. 
 
 CREATE TABLE bakery(id INTEGER PRIMARY KEY, item TEXT, quantity INTEGER, price INTEGER, box INTEGER);
 
@@ -18,16 +18,17 @@ INSERT INTO bakery VALUES(13, "Fresh Fruit Cake", 1, 30, 9);
 INSERT INTO bakery VALUES(14, "Vanilla Cupcake", 12, 4, 10);
 INSERT INTO bakery VALUES(15, "Birthday Cake Cupcake", 12, 4, 10);
 
---display the database ordered by price
-SELECT * FROM bakery
+#1. List the bakery items by price (low-high).
+SELECT item, price 
+FROM bakery
 ORDER BY price;
 
---what is the total amount of items in each box?
-SELECT box, SUM(quantity) 
+#2. What is the total amount of items in each box?
+SELECT box, SUM(quantity) as quantity
 FROM bakery
 GROUP BY box;
 
---what are the 5 items with lowest inventory?
+#3. What are the 5 items with lowest inventory?
 SELECT item, quantity, price 
 FROM bakery
 ORDER BY quantity
