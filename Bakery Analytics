@@ -1,4 +1,4 @@
-#This SQL code contains the creation of a bakery database which is queried to answer questions about the data. 
+#This SQL code contains the creation of a bakery database which is then queried to answer questions about the items. 
 
 CREATE TABLE bakery(id INTEGER PRIMARY KEY, item TEXT, quantity INTEGER, price INTEGER, box INTEGER);
 
