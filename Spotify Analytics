@@ -1,4 +1,4 @@
-#This project uses Spotify data downloaded from Kaggle.
+#This project uses Spotify data downloaded from Kaggle. The data consists of the top 50 songs in 2021.
 #Then I inserted the data into a table I created.
 #The data was then queried using SQL.
 
@@ -23,3 +23,55 @@ tempo decimal(6,3) NOT NULL,
 duration_ms integer NOT NULL,
 time_signature integer NOT NULL 
 )
+
+#1. What are the top 10 songs based on popularity?
+SELECT 
+artist_name, 
+track_name, 
+popularity
+FROM BIT_DB.Spotifydata
+ORDER BY popularity desc
+LIMIT 10;
+
+#2. What's the average danceability of songs with popularity >= 92?
+SELECT avg(danceability)
+FROM BIT_DB.Spotifydata
+WHERE popularity >= 92;
+
+#3. What are the bottom 10 songs based on popularity?
+SELECT 
+artist_name, 
+track_name, 
+popularity
+FROM BIT_DB.Spotifydata
+ORDER BY popularity asc
+LIMIT 10;
+
+#4. What's the average danceability of the bottom 10 songs based on popularity?
+SELECT  
+avg(danceability)
+FROM BIT_DB.Spotifydata
+WHERE popularity <= 82
+
+#5. Who has the most songs on this list?
+SELECT 
+artist_name, 
+count(track_name) as count
+FROM BIT_DB.Spotifydata
+GROUP BY artist_name
+HAVING count(track_name) = 
+(SELECT max(count) 
+FROM (SELECT count(track_name) as count FROM BIT_DB.Spotifydata
+GROUP BY artist_name));
+
+#6. List Doja Cat's songs with their duration, valence and tempo.
+SELECT 
+track_name, 
+(duration_ms)/1000 as duration_s, 
+valence, 
+tempo
+FROM BIT_DB.Spotifydata
+WHERE artist_name = 'Doja Cat'
+
+
+
