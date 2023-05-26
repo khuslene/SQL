@@ -73,5 +73,14 @@ tempo
 FROM BIT_DB.Spotifydata
 WHERE artist_name = 'Doja Cat'
 
+#7. Label each artist with average popularity of 90 or above as Top Star.
+WITH popularity_average_CTE AS (
+    SELECT s.artist_name, avg(s.popularity) as average_popularity
+    FROM Spotifydata as s
+    GROUP BY s.artist_name)
+    
+SELECT artist_name, average_popularity, 'Top Star' as tag
+FROM popularity_average_CTE
+WHERE average_popularity >= 90 
 
 
