@@ -79,7 +79,10 @@ WITH popularity_average_CTE AS (
     FROM Spotifydata as s
     GROUP BY s.artist_name)
     
-SELECT artist_name, average_popularity, 'Top Star' as tag
+SELECT 
+artist_name, 
+average_popularity, 
+'Top Star' as tag
 FROM popularity_average_CTE
 WHERE average_popularity >= 90 
 
