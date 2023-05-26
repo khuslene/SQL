@@ -1,5 +1,7 @@
-#This SQL code contains the creation of a bakery database which is then queried to answer questions about the items. 
+#In this project, I created a table of items a bakery would sell.
+#Then using SQL, I performed analytics on the data. 
 
+#Creating the table
 CREATE TABLE bakery(id INTEGER PRIMARY KEY, item TEXT, quantity INTEGER, price INTEGER, box INTEGER);
 
 INSERT INTO bakery VALUES(1, "Croissant", 5, 3, 3);
