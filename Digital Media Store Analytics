@@ -130,3 +130,28 @@ GROUP BY emp.EmployeeId
 ORDER BY ROUND(sum(inv.Total),2) desc
 LIMIT 1;
 
+#15. Show all the tracks in playlist 1.
+SELECT 
+t.TrackId, 
+t.Name, 
+t.Composer
+FROM chinook.playlist_track as pt
+LEFT JOIN chinook.tracks as t
+on pt.TrackId = t.TrackId
+WHERE pt.PlaylistId = 1;
+
+#16. Which album has had the most sales?
+SELECT 
+al.AlbumId, 
+al.Title, ROUND(sum((ii.unitprice*quantity)),2) as total_sales
+FROM chinook.albums as al
+LEFT JOIN chinook.tracks as t
+on al.AlbumId = t.AlbumId
+RIGHT JOIN chinook.invoice_items as ii
+on t.TrackId = ii.TrackId
+GROUP BY al.albumid
+ORDER BY total_sales desc
+LIMIT 1;
+
+
+
