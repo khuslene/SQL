@@ -1,0 +1,164 @@
+#This project uses an Airbnb database for Tokyo, Japan for queries 
+
+CREATE TABLE listings (
+listing_id integer,
+listing_url text,
+scrape_id integer,
+last_scraped text,
+source text,
+name text,
+description text,
+neighborhood_overview text,
+picture_url text,
+host_id integer,
+host_url text,
+host_name text,
+host_since text,
+host_location text,
+host_about text,
+host_response_time text,
+host_response_rate text,
+host_acceptance_rate text,
+host_is_superhost text,
+host_thumbnail_url text,
+host_picture_url text,
+host_neighbourhood text,
+host_listings_count text,
+host_total_listings_count text,
+host_verifications text,
+host_has_profile_pic text,
+host_identity_verified text,
+neighbourhood text,
+neighbourhood_cleansed text,
+neighbourhood_group_cleansed text,
+latitude text,
+longitude text,
+property_type text,
+room_type text,
+accommodates integer,
+bathrooms integer,
+bathrooms_text text,
+bedrooms integer,
+beds integer,
+amenities text,
+price integer,
+minimum_nights integer,
+maximum_nights integer,
+minimum_minimum_nights integer,
+maximum_minimum_nights integer,
+minimum_maximum_nights integer,
+maximum_maximum_nights integer,
+minimum_nights_avg_ntm real,
+maximum_nights_avg_ntm real,
+calendar_updated text,
+has_availability text,
+availability_30 integer,
+availability_60 integer,
+availability_90 integer,
+availability_365 integer,
+calendar_last_scraped text,
+number_of_reviews integer,
+number_of_reviews_ltm integer,
+number_of_reviews_l30d integer,
+first_review text,
+last_review text,
+review_scores_rating	real,
+review_scores_accuracy real,
+review_scores_cleanliness real,
+review_scores_checkin real,
+review_scores_communication real,
+review_scores_location real,
+review_scores_value real,
+license text,
+instant_bookable text,
+calculated_host_listings_count integer,
+calculated_host_listings_count_entire_homes integer,
+calculated_host_listings_count_private_rooms integer,
+calculated_host_listings_count_shared_rooms integer,
+reviews_per_month real);
+
+#1. List the top 10 listings based on rating with at least 50 reviews
+
+SELECT
+listing_id AS "Listing ID",
+listing_url AS "Listing URL",
+host_name AS "Host Name",
+review_scores_rating AS "Rating"
+FROM listings
+WHERE review_scores_rating IS NOT '' AND number_of_reviews >= 50
+ORDER BY review_scores_rating desc
+LIMIT 10;
+
+
+#2. Which host has the most listings?
+
+SELECT 
+host_id AS "Host ID",
+host_name AS "Host Name",
+count(listing_id) as Listings
+FROM listings
+GROUP BY host_id
+ORDER BY count(listing_id) desc
+LIMIT 1;
+
+#3. In each neighborhood what is the top listing based on rating with at least 50 reviews?
+
+SELECT
+neighbourhood_cleansed AS Neighbourhood,
+listing_id AS "Listing ID",
+listing_url AS "Listing URL",
+host_name AS "Host Name",
+MAX(review_scores_rating) AS "Review Scores Rating"
+FROM listings
+WHERE review_scores_rating IS NOT '' and number_of_reviews >= 50
+GROUP BY neighbourhood_cleansed;
+
+#4. Neighbourhoods with the highest average ratings:
+
+SELECT 
+neighbourhood_cleansed AS Neighbourhood, 
+avg(review_scores_rating) AS "Average Rating"
+FROM listings
+WHERE review_scores_rating IS NOT ''
+GROUP BY neighbourhood_cleansed
+ORDER BY "Average Rating" desc
+LIMIT 3;
+
+#5. Neighbourhoods with the lowest average ratings:
+
+SELECT 
+neighbourhood_cleansed AS Neighbourhood, 
+avg(review_scores_rating) AS "Average Rating"
+FROM listings
+WHERE review_scores_rating IS NOT ''
+GROUP BY neighbourhood_cleansed
+ORDER BY "Average Rating" asc
+LIMIT 3;
+
+#6. List all the superhosts in the Shibuya neighbourhood.
+
+SELECT 
+host_id AS "Host ID", 
+host_name AS “Host Name”
+FROM listings
+WHERE host_is_superhost = 't' and neighbourhood_cleansed LIKE '%Shibuya%'
+GROUP BY host_id;
+
+#7. How many listings are there for each room type?
+
+SELECT 
+room_type AS "Room Type", 
+count(room_type) as Listings
+FROM listings
+GROUP BY room_type
+ORDER BY count(room_type) desc;
+
+
+
+
+
+
+
+
+
+
