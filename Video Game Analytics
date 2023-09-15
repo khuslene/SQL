@@ -1,0 +1,102 @@
+#This project queries a dataset consisting of Video Game statistics 
+
+CREATE TABLE sales(
+Name text,
+Platform text,
+Year_of_Release year,
+Genre text,
+Publisher text,
+NA_Sales dec,
+EU_Sales dec,
+JP_Sales dec,
+Other_Sales dec,
+Global_Sales dec,
+Critic_Score dec,
+Critic_Count integer,
+User_Score dec,
+User_Count integer,
+Developer text,
+Rating text);
+
+#1. List the number of games from each publisher
+
+SELECT Publisher, count(*)
+FROM sales
+GROUP BY Publisher;
+
+#2. What are the top 10 publishers based on the number of games?
+
+SELECT Publisher, count(*)
+FROM sales
+GROUP BY Publisher
+ORDER BY count(*) desc
+LIMIT 10;
+
+#3.What are the top 10 genres based on the number of games?
+
+SELECT Genre, count(*)
+FROM sales
+GROUP BY Genre
+ORDER BY count(*) desc
+LIMIT 10;
+
+#4. Which game has the highest sales in NA?
+
+SELECT Name, NA_Sales
+FROM sales
+ORDER BY NA_Sales desc
+LIMIT 1;
+
+#5. What games have higher sales in NA than in the other regions?
+
+SELECT Name, NA_Sales
+FROM sales
+WHERE NA_Sales > EU_Sales AND NA_Sales > JP_Sales AND NA_Sales > Other_Sales;
+
+#6. List the top 10 games based on critic score with a critic count over 30
+
+SELECT distinct Name, Year_of_Release, Critic_Score
+FROM sales
+WHERE Critic_Score != '' and critic_count > 30
+ORDER BY Critic_Score desc
+LIMIT 10;
+
+#7. List the top 10 games based on user score with a user count over 100
+
+SELECT distinct Name, Year_of_Release, User_Score
+FROM sales
+WHERE User_Score != 'tbd' and User_Score != '' and user_count > 100
+ORDER BY User_Score desc
+LIMIT 10;
+
+#8. List the total sales in NA for each genre
+
+SELECT Genre, ROUND(sum(NA_Sales), 2) as NA_Total_Sales
+FROM sales
+GROUP BY genre
+ORDER BY NA_Total_Sales desc;
+
+#9. List the total sales in JP for each genre
+
+SELECT Genre, ROUND(sum(JP_Sales), 2) as JP_Total_Sales
+FROM sales
+GROUP BY genre
+ORDER BY JP_Total_Sales desc;
+
+#10. List the total sales in EU for each genre
+
+SELECT Genre, ROUND(sum(EU_Sales), 2) as EU_Total_Sales
+FROM sales
+GROUP BY genre
+ORDER BY EU_Total_Sales desc;
+
+#11. What are the highest rated game by critics for each ESRB rating?
+
+SELECT Rating, Name, max(Critic_Score) as Critic_Score
+FROM sales
+WHERE critic_Score != '' and rating != ''
+GROUP BY Rating;
+
+
+#Kaggle data set: https://www.kaggle.com/datasets/rush4ratio/video-game-sales-with-ratings 
+
