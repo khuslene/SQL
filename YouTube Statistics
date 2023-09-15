@@ -1,0 +1,72 @@
+#This project consists of queries using a Kaggle dataset about YouTube Statistics
+
+CREATE TABLE stats(
+rank integer,
+Youtuber text,
+subscribers integer,
+video_views integer,
+category text,
+Title text,
+uploads integer,
+Country text,
+Abbreviation text,
+channel_type text,
+video_views_rank integer,
+country_rank integer,
+channel_type_rank integer,
+video_views_for_the_last_30_days integer,
+lowest_monthly_earnings integer,
+highest_monthly_earnings integer,
+lowest_yearly_earnings integer,
+highest_yearly_earnings integer,
+subscribers_for_last_30_days integer,
+created_year year,
+created_month text,
+created_date integer,
+Gross_tertiary_education_enrollment_pct dec,
+Population integer,
+Unemployment_rate dec,
+Urban_population integer,
+Latitude dec,
+Longitude dec);
+
+#1. How many of each channel type are there?
+
+SELECT channel_type, count(channel_type) as count
+FROM stats
+GROUP BY channel_type
+ORDER BY count desc;
+
+#2. What about for the top 20 channels?
+
+SELECT channel_type, count(channel_type) as count
+FROM stats
+WHERE rank BETWEEN 1 AND 20
+GROUP BY channel_type
+ORDER BY count desc;
+
+#3. What countries are present in this set and how many channels per country?
+
+SELECT Country, count(Country) as count
+FROM stats
+GROUP BY Country
+ORDER BY count desc;
+
+#4. List the channels with high yearly earnings and low upload counts.
+
+SELECT Youtuber, channel_type, highest_yearly_earnings, uploads
+FROM stats
+WHERE uploads < 50 AND highest_yearly_earnings > 1000000
+ORDER BY highest_yearly_earnings desc;
+
+#5. Identify the top 5 channel types and highest video views.
+
+SELECT channel_type, sum(video_views) as Total_views
+FROM stats
+GROUP BY channel_type
+ORDER BY Total_views desc
+LIMIT 5;
+
+
+
+Kaggle data set: https://www.kaggle.com/datasets/nelgiriyewithana/global-youtube-statistics-2023?resource=download 
